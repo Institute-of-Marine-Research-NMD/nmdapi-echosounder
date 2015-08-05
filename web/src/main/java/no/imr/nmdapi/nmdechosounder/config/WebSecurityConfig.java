@@ -49,7 +49,7 @@ public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests().anyRequest().authenticated().accessDecisionManager(new NMDsecurityManager(accessDecisionVoters));
+        http.authorizeRequests().anyRequest().authenticated().accessDecisionManager(new NMDsecurityManager(accessDecisionVoters));
         http.anonymous().authorities("ANONYMOUS");
     }
 
