@@ -22,11 +22,13 @@ public class NMDEchosounderServiceImpl implements NMDEchosounderService {
     @Override
     public void deleteData(final String missiontype, final String year, final String platform, final String delivery) {
         nmdDataDao.delete(missiontype, year, platform, delivery);
+        nmdDataDao.deleteDataset(missiontype, year, platform, delivery, "ECHOSOUNDER");
     }
 
    @Override
     public void insertData(final String missiontype, final String year, final String platform, final String delivery, final EchosounderDatasetType dataset) {
         nmdDataDao.insert(missiontype, year, platform, delivery, dataset, EchosounderDatasetType.class);
+        nmdDataDao.insertDataset(missiontype, year, platform, delivery, "ECHOSOUNDER");
     }
 
 
