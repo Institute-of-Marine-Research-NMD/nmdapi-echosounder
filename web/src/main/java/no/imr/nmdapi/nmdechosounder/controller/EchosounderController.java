@@ -26,7 +26,7 @@ public class EchosounderController {
     /**
      * Url part that defines it as echosounder.
      */
-    public static final String ECHOSOUNDER_URL = "/nmdechosounder";
+    public static final String ECHOSOUNDER_URL = "/echosounder";
 
     /**
      * Class logger.
