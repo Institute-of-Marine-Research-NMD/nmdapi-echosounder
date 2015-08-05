@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>no.imr.nmdapi.web</groupId>
+        <artifactId>nmdapi-parent</artifactId>
+        <version>0.0.1</version>
+    </parent>
+    <groupId>no.imr.nmdapi.echosounder</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Parent - NMDEchosounder</name>
+    <modules>
+        <module>web</module>
+        <module>service</module>
+    </modules>
+    <repositories>
+        <repository>
+            <id>nexus-release</id>
+            <name>Nexus release repository for IMR</name>
+            <url>http://build.imr.no/nexus/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>repository.springsource.milestone</id>
+            <name>SpringSource Milestone Repository</name>
+            <url>http://repo.springsource.org/milestone</url>
+        </repository>
+    </repositories>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jaxb.version>2.1.17</jaxb.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>no.imr.nmd.commons.echosounder.jaxb</groupId>
+            <artifactId>commons-echosounder-jaxb</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>no.imr.nmdapi.common</groupId>
+            <artifactId>nmdapi-exceptions</artifactId>
+            <version>0.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>no.imr.nmdapi.commons.respones</groupId>
+            <artifactId>nmdapi-commons-respones</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+    </dependencies>
+</project>
