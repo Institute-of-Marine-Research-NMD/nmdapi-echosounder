@@ -53,8 +53,8 @@ public class WebAppInitalizer extends AbstractDispatcherServletInitializer {
         super.onStartup(servletContext);
         Dynamic mdcFilter = servletContext.addFilter("MDCInsertingServletFilter", ch.qos.logback.classic.helpers.MDCInsertingServletFilter.class);
         mdcFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*");
-        Dynamic securityFilter = servletContext.addFilter(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME, DelegatingFilterProxy.class);
-        securityFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*");
+//        Dynamic securityFilter = servletContext.addFilter(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME, DelegatingFilterProxy.class);
+//        securityFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*");
 
         Dynamic encodingFilter = servletContext.addFilter("encodingFilter", org.springframework.web.filter.CharacterEncodingFilter.class);
         encodingFilter.setInitParameter("encoding", "UTF-8");

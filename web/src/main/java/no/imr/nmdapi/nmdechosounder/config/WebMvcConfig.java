@@ -3,7 +3,7 @@ package no.imr.nmdapi.nmdechosounder.config;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.util.List;
 import javax.xml.bind.JAXBException;
-import no.imr.nmdapi.common.converters.JAXBHttpMessageConverter;
+import no.imr.nmdapi.common.jaxb.converters.JAXBHttpMessageConverter;
 import no.imr.nmdapi.nmdechosounder.converters.mapper.EchoNamespacePrefixMapper;
 import no.imr.nmdapi.nmdechosounder.converters.mapper.ResponseNamespacePrefixMapper;
 import org.slf4j.Logger;

@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.cert.CertificateException;
 import java.util.List;
-import no.imr.nmdapi.common.security.access.NMDsecurityManager;
-import no.imr.nmdapi.common.security.jwt.JwtAccessTokenConverter;
-import no.imr.nmdapi.common.security.jwt.JwtTokenStore;
+import no.imr.common.security.access.NMDsecurityManager;
+import no.imr.common.security.jwt.JwtAccessTokenConverter;
+import no.imr.common.security.jwt.JwtTokenStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +62,7 @@ public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
 
     @Bean
     public TokenEnhancer tokenEnhancer() throws IOException, CertificateException, InvalidKeyException {
-        TokenEnhancer enhancer = new JwtAccessTokenConverter();
+        TokenEnhancer enhancer = new JwtAccessTokenConverter("keys/fs.cer");
         return enhancer;
     }
 
@@ -74,7 +74,7 @@ public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() throws IOException, CertificateException, InvalidKeyException {
-        JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
+        JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter("keys/fs.cer");
         return accessTokenConverter;
     }
 }

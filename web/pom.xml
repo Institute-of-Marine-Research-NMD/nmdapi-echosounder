@@ -80,14 +80,14 @@
             <artifactId>logging-framework</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.imr.nmdapi.web.apps</groupId>
-            <artifactId>common</artifactId>
-            <version>${project.version}</version>
+    <groupId>no.imr.nmd.commons.jaxb</groupId>
+    <artifactId>commons-jaxb</artifactId>
+    <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>no.imr.nmd.commons.security</groupId>
             <artifactId>commons-security-jwt</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
