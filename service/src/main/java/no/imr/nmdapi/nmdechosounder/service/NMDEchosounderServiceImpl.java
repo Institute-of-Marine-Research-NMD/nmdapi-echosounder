@@ -42,4 +42,14 @@ public class NMDEchosounderServiceImpl implements NMDEchosounderService {
         return nmdDataDao.hasData(missiontype, year, platform, delivery);
     }
 
+    @Override
+    public boolean hasDataByCruiseNr(final String cruisenr) {
+        return nmdDataDao.hasDataByCruiseNr(cruisenr);
+    }
+
+    @Override
+    public Object getDataByCruiseNr(String cruisenr) {
+        return nmdDataDao.getByCruiseNr(EchosounderDatasetType.class, cruisenr);
+    }
+
 }

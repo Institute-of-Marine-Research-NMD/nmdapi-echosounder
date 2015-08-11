@@ -55,7 +55,7 @@ public interface NMDEchosounderService {
     void insertData(String missiontype, String year, String platform, String delivery, EchosounderDatasetType dataset);
 
     /**
-     * 
+     *
      * @param missiontype
      * @param year
      * @param platform
@@ -63,6 +63,20 @@ public interface NMDEchosounderService {
      * @return
      */
     boolean hasData(String missiontype, String year, String platform, String delivery);
+
+    /**
+     *
+     * @param cruisenr
+     * @return
+     */
+    boolean hasDataByCruiseNr(String cruisenr);
+
+    /**
+     * 
+     * @param cruisenr
+     * @return
+     */
+    Object getDataByCruiseNr(String cruisenr);
 
 
 }
