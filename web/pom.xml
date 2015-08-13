@@ -80,9 +80,9 @@
             <artifactId>logging-framework</artifactId>
         </dependency>
         <dependency>
-    <groupId>no.imr.nmd.commons.jaxb</groupId>
-    <artifactId>commons-jaxb</artifactId>
-    <version>0.0.1</version>
+            <groupId>no.imr.nmd.commons.jaxb</groupId>
+            <artifactId>commons-jaxb</artifactId>
+            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>no.imr.nmd.commons.security</groupId>
