@@ -22,7 +22,6 @@
     <context:component-scan base-package="no.imr.nmdapi.nmdechosounder.service.config" />
 
     <!-- S2D dao layers -->
-    <context:component-scan base-package="no.imr.nmdapi.nmdechosounder.dao.config" />
     <context:component-scan base-package="no.imr.nmdapi.dao.file.config" />
     <!-- Error handling advice -->
     <context:component-scan base-package="no.imr.nmdapi.common.advice" />
