@@ -70,13 +70,21 @@ public class NMDEchosounderServiceImpl implements NMDEchosounderService {
     }
 
     @Override
-    public OptionKeyValueListType getInfo(String missiontype, String year, String platform, String delivery) {
+    public Object getInfo(String missiontype, String year, String platform, String delivery) {
         String format = nmdDatasetDao.getRootNamespace(TYPE, DATASET_NAME, missiontype, year, platform, delivery);
+        long checksum = nmdDatasetDao.getChecksum(TYPE, DATASET_NAME, missiontype, year, platform, delivery);
+        long lastModified = nmdDatasetDao.getLastModified(TYPE, DATASET_NAME, missiontype, year, platform, delivery);
         OptionKeyValueListType keyValueListType = new OptionKeyValueListType();
-        OptionKeyValueType formatType = new OptionKeyValueType();
-        formatType.setKey("format");
-        formatType.setValue(format);
-        keyValueListType.getElement().add(formatType);
+        keyValueListType.getElement().add(getOptionKeyValueType("format", format));
+        keyValueListType.getElement().add(getOptionKeyValueType("checksum", String.valueOf(checksum)));
+        keyValueListType.getElement().add(getOptionKeyValueType("lastModified", String.valueOf(lastModified)));
         return keyValueListType;
+    }
+
+    private OptionKeyValueType getOptionKeyValueType(String key, String value) {
+        OptionKeyValueType formatType = new OptionKeyValueType();
+        formatType.setKey(key);
+        formatType.setValue(value);
+        return formatType;
     }
 }
