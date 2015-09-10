@@ -1,7 +1,10 @@
 package no.imr.nmdapi.nmdechosounder.service;
 
+import no.imr.nmd.commons.dataset.jaxb.DatasetType;
 import no.imr.nmdapi.dao.file.NMDDatasetDao;
 import no.imr.nmdapi.generic.nmdechosounder.domain.luf20.EchosounderDatasetType;
+import no.imr.nmdapi.generic.response.v1.OptionKeyValueListType;
+import no.imr.nmdapi.generic.response.v1.OptionKeyValueType;
 import org.apache.commons.configuration.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -68,4 +71,24 @@ public class NMDEchosounderServiceImpl implements NMDEchosounderService {
     }
 
 
+    @Override
+    public void updateDataset(String missiontype, String year, String platform, String delivery, DatasetType dataset) {
+        nmdDatasetDao.updateDataset(dataset, missiontype, year, platform, delivery);
+    }
+
+    @Override
+    public DatasetType getDataset(String missiontype, String year, String platform, String delivery) {
+        return nmdDatasetDao.getDatasetByName(TYPE, DATASET_NAME, missiontype, year, platform, delivery);
+    }
+
+    @Override
+    public OptionKeyValueListType getInfo(String missiontype, String year, String platform, String delivery) {
+        String format = nmdDatasetDao.getRootNamespace(TYPE, DATASET_NAME, missiontype, year, platform, delivery);
+        OptionKeyValueListType keyValueListType = new OptionKeyValueListType();
+        OptionKeyValueType formatType = new OptionKeyValueType();
+        formatType.setKey("format");
+        formatType.setValue(format);
+        keyValueListType.getElement().add(formatType);
+        return keyValueListType;
+    }
 }

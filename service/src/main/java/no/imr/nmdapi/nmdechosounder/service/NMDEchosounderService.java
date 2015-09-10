@@ -1,5 +1,6 @@
 package no.imr.nmdapi.nmdechosounder.service;
 
+import no.imr.nmd.commons.dataset.jaxb.DatasetType;
 import no.imr.nmdapi.generic.nmdechosounder.domain.luf20.EchosounderDatasetType;
 
 
@@ -72,11 +73,42 @@ public interface NMDEchosounderService {
     boolean hasDataByCruiseNr(String cruisenr);
 
     /**
-     * 
+     *
      * @param cruisenr
      * @return
      */
     Object getDataByCruiseNr(String cruisenr);
+
+     /**
+     *
+     * @param missiontype
+     * @param year
+     * @param platform
+     * @param delivery
+     * @return
+     */
+    DatasetType getDataset(String missiontype, String year, String platform, String delivery);
+
+    /**
+     * Update dataset information.
+     *
+     * @param missiontype
+     * @param year
+     * @param platform
+     * @param delivery
+     * @param dataset
+     */
+    void updateDataset(String missiontype, String year, String platform, String delivery, DatasetType dataset);
+
+    /**
+     *
+     * @param missiontype
+     * @param year
+     * @param platform
+     * @param delivery
+     * @return
+     */
+    Object getInfo(String missiontype, String year, String platform, String delivery);
 
 
 }

@@ -46,7 +46,7 @@
         <dependency>
             <groupId>no.imr.nmdapi.commons.respones</groupId>
             <artifactId>nmdapi-commons-respones</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.4</version>
         </dependency>
     </dependencies>
 </project>

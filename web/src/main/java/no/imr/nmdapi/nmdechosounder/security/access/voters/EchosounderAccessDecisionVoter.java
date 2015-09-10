@@ -55,10 +55,19 @@ public class EchosounderAccessDecisionVoter implements AccessDecisionVoter<Filte
             } else if (obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.PUT.name()) || obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.DELETE.name())) {
                 Collection<String> auths = getAuths(auth.getAuthorities());
                 String[] args = obj.getRequestUrl().split("/");
-                if (auth.isAuthenticated() && datasetDao.hasWriteAccess(auths, "echosounder", "data", args[1], args[2], args[3], args[4])) {
-                    return ACCESS_GRANTED;
+                if (!args[args.length - 1].equalsIgnoreCase("dataset")) {
+                    if (auth.isAuthenticated() && datasetDao.hasWriteAccess(auths, "echosounder", "data", args[1], args[2], args[3], args[4])) {
+                        return ACCESS_GRANTED;
+                    } else {
+                        return ACCESS_DENIED;
+                    }
                 } else {
-                    return ACCESS_DENIED;
+                    String adminRole = configuration.getString("admin.role");
+                    if (auth.isAuthenticated() && auths.contains(adminRole)) {
+                        return ACCESS_GRANTED;
+                    } else {
+                        return ACCESS_DENIED;
+                    }
                 }
             } else if (obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.GET.name())) {
                 Collection<String> auths = getAuths(auth.getAuthorities());
@@ -74,7 +83,7 @@ public class EchosounderAccessDecisionVoter implements AccessDecisionVoter<Filte
                 return ACCESS_GRANTED;
             }
         } else {
-            // Not reference data.
+            // Not biotic data.
             return ACCESS_ABSTAIN;
         }
     }

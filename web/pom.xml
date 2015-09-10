@@ -151,6 +151,7 @@
                         <version>2.1</version>
                         <configuration>
                             <path>/apis/nmdapi/echosounder/v1</path>
+                            <uriEncoding>UTF-8</uriEncoding>
                         </configuration>
                     </plugin>
                 </plugins>

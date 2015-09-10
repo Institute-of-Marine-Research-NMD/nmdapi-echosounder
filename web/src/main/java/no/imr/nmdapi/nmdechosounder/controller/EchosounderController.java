@@ -2,6 +2,7 @@ package no.imr.nmdapi.nmdechosounder.controller;
 
 import javax.servlet.http.HttpServletResponse;
 import no.imr.framework.logging.slf4j.aspects.stereotype.PerformanceLogging;
+import no.imr.nmd.commons.dataset.jaxb.DatasetType;
 import no.imr.nmdapi.exceptions.BadRequestException;
 import no.imr.nmdapi.generic.nmdechosounder.domain.luf20.EchosounderDatasetType;
 import no.imr.nmdapi.nmdechosounder.service.NMDEchosounderService;
@@ -133,7 +134,7 @@ public class EchosounderController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Object find(@RequestParam(value = "cruisenr", required = false) String cruisenr) {
-        LOGGER.info("Start BioticController.find");
+        LOGGER.info("Start EchosounderController.find");
         if (cruisenr != null) {
             return nmdEchosounderService.getDataByCruiseNr(cruisenr);
         } else {
@@ -150,12 +151,67 @@ public class EchosounderController {
     @RequestMapping(value = "/find", method = RequestMethod.HEAD)
     @ResponseBody
     public void find(HttpServletResponse httpServletResponse, @RequestParam(value = "cruisenr", required = false) String cruisenr) {
-        LOGGER.info("Start BioticController.find");
+        LOGGER.info("Start EchosounderController.find");
         if (nmdEchosounderService.hasDataByCruiseNr(cruisenr)) {
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
         } else {
             httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
+    }
+
+
+    /**
+     * insert biotic data for mission.
+     *
+     * @param missiontype
+     * @param year
+     * @param platform
+     * @param delivery
+     * @param dataset
+     */
+    @PerformanceLogging
+    @RequestMapping(value = "/{missiontype}/{year}/{platform}/{delivery}/dataset", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void updateDataset(@PathVariable(value = "missiontype") String missiontype, @PathVariable(value = "year") String year, @PathVariable(value = "platform") String platform, @PathVariable(value = "delivery") String delivery, @RequestBody DatasetType dataset) {
+        LOGGER.info("Start EchosounderController.updateDataset");
+        nmdEchosounderService.updateDataset(missiontype, year, platform, delivery, dataset);
+    }
+
+    /**
+     * insert biotic data for mission.
+     *
+     * @param missiontype
+     * @param year
+     * @param platform
+     * @param delivery
+     * @return
+     */
+    @PerformanceLogging
+    @RequestMapping(value = "/{missiontype}/{year}/{platform}/{delivery}/dataset", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public DatasetType getDataset(@PathVariable(value = "missiontype") String missiontype, @PathVariable(value = "year") String year, @PathVariable(value = "platform") String platform, @PathVariable(value = "delivery") String delivery) {
+        LOGGER.info("Start EchosounderController.getDataset");
+        return nmdEchosounderService.getDataset(missiontype, year, platform, delivery);
+    }
+
+    /**
+     * Get namepsace for data.
+     *
+     * @param missiontype
+     * @param year
+     * @param platform
+     * @param delivery
+     * @return
+     */
+    @PerformanceLogging
+    @RequestMapping(value = "/{missiontype}/{year}/{platform}/{delivery}/info", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public Object getInfo(@PathVariable(value = "missiontype") String missiontype, @PathVariable(value = "year") String year, @PathVariable(value = "platform") String platform, @PathVariable(value = "delivery") String delivery) {
+        LOGGER.info("Start EchosounderController.getInfo");
+        return nmdEchosounderService.getInfo(missiontype, year, platform, delivery);
     }
 
 }

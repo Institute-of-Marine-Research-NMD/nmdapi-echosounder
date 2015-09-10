@@ -23,6 +23,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 @EnableWebMvcSecurity
