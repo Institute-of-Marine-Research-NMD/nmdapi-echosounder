@@ -159,43 +159,6 @@ public class EchosounderController {
         }
     }
 
-
-    /**
-     * insert biotic data for mission.
-     *
-     * @param missiontype
-     * @param year
-     * @param platform
-     * @param delivery
-     * @param dataset
-     */
-    @PerformanceLogging
-    @RequestMapping(value = "/{missiontype}/{year}/{platform}/{delivery}/dataset", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public void updateDataset(@PathVariable(value = "missiontype") String missiontype, @PathVariable(value = "year") String year, @PathVariable(value = "platform") String platform, @PathVariable(value = "delivery") String delivery, @RequestBody DatasetType dataset) {
-        LOGGER.info("Start EchosounderController.updateDataset");
-        nmdEchosounderService.updateDataset(missiontype, year, platform, delivery, dataset);
-    }
-
-    /**
-     * insert biotic data for mission.
-     *
-     * @param missiontype
-     * @param year
-     * @param platform
-     * @param delivery
-     * @return
-     */
-    @PerformanceLogging
-    @RequestMapping(value = "/{missiontype}/{year}/{platform}/{delivery}/dataset", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public DatasetType getDataset(@PathVariable(value = "missiontype") String missiontype, @PathVariable(value = "year") String year, @PathVariable(value = "platform") String platform, @PathVariable(value = "delivery") String delivery) {
-        LOGGER.info("Start EchosounderController.getDataset");
-        return nmdEchosounderService.getDataset(missiontype, year, platform, delivery);
-    }
-
     /**
      * Get namepsace for data.
      *

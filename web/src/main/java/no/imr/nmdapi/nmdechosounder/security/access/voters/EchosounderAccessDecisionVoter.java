@@ -55,19 +55,10 @@ public class EchosounderAccessDecisionVoter implements AccessDecisionVoter<Filte
             } else if (obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.PUT.name()) || obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.DELETE.name())) {
                 Collection<String> auths = getAuths(auth.getAuthorities());
                 String[] args = obj.getRequestUrl().split("/");
-                if (!args[args.length - 1].equalsIgnoreCase("dataset")) {
-                    if (auth.isAuthenticated() && datasetDao.hasWriteAccess(auths, "echosounder", "data", args[1], args[2], args[3], args[4])) {
-                        return ACCESS_GRANTED;
-                    } else {
-                        return ACCESS_DENIED;
-                    }
+                if (auth.isAuthenticated() && datasetDao.hasWriteAccess(auths, "echosounder", "data", args[1], args[2], args[3], args[4])) {
+                    return ACCESS_GRANTED;
                 } else {
-                    String adminRole = configuration.getString("admin.role");
-                    if (auth.isAuthenticated() && auths.contains(adminRole)) {
-                        return ACCESS_GRANTED;
-                    } else {
-                        return ACCESS_DENIED;
-                    }
+                    return ACCESS_DENIED;
                 }
             } else if (obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.GET.name())) {
                 Collection<String> auths = getAuths(auth.getAuthorities());

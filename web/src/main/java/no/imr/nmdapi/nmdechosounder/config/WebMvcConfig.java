@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import java.util.List;
 import javax.xml.bind.JAXBException;
 import no.imr.nmdapi.common.jaxb.converters.JAXBHttpMessageConverter;
-import no.imr.nmdapi.nmdechosounder.converters.mapper.DatasetNamespacePrefixMapper;
 import no.imr.nmdapi.nmdechosounder.converters.mapper.EchoNamespacePrefixMapper;
 import no.imr.nmdapi.nmdechosounder.converters.mapper.ResponseNamespacePrefixMapper;
 import org.slf4j.Logger;
@@ -61,7 +60,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(getMappingJacksonHttpMessageConverter());
         converters.add(getEchoMappingJaxBHttpMessageConverter());
-        converters.add(getDatasetMappingJaxBHttpMessageConverter());
         converters.add(getResponseMappingJaxBHttpMessageConverter());
     }
 
@@ -100,17 +98,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         try {
             converter = new JAXBHttpMessageConverter(new ResponseNamespacePrefixMapper(),
                     "no.imr.nmdapi.generic.response.v1");
-        } catch (JAXBException ex) {
-            LOGGER.error("Error creating message converter.", ex);
-        }
-        return converter;
-    }
-
-    private HttpMessageConverter<?> getDatasetMappingJaxBHttpMessageConverter() {
-        JAXBHttpMessageConverter converter = null;
-        try {
-            converter = new JAXBHttpMessageConverter(new DatasetNamespacePrefixMapper(),
-                    "no.imr.nmd.commons.dataset.jaxb");
         } catch (JAXBException ex) {
             LOGGER.error("Error creating message converter.", ex);
         }
