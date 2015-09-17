@@ -24,6 +24,12 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
+
+/**
+ * Security configuration for the api.
+ *
+ * @author kjetilf
+ */
 @Configuration
 @EnableWebMvcSecurity
 @EnableResourceServer
@@ -53,6 +59,11 @@ public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
         http.anonymous().authorities("ANONYMOUS");
     }
 
+    /**
+     * Creating token service object for handling all tokenstores.
+     *
+     * @return
+     */
     @Bean
     public DefaultTokenServices tokenServices() {
         DefaultTokenServices tokenServices = new DefaultTokenServices();
