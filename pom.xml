@@ -36,7 +36,7 @@
         <dependency>
             <groupId>no.imr.nmd.commons.echosounder.jaxb</groupId>
             <artifactId>commons-echosounder-jaxb</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.3</version>
         </dependency>
         <dependency>
             <groupId>no.imr.nmdapi.common</groupId>
