@@ -55,6 +55,20 @@ public class EchosounderAccessDecisionVoter implements AccessDecisionVoter<Filte
      */
     private static final int MISSIONTYPE_PATH = 1;
 
+    /**
+     * Denied string literal.
+     */
+    private static final String DENIED = "Denied";
+    /**
+     * Granted string literal.
+     */
+    private static final String GRANTED = "Granted";
+    /**
+     * Abstained string literal.
+     */
+    private static final String ABSTAINED = "Abstained";
+
+
     @Autowired
     private NMDDatasetDao datasetDao;
 
@@ -77,42 +91,42 @@ public class EchosounderAccessDecisionVoter implements AccessDecisionVoter<Filte
         if (obj.getFullRequestUrl().contains(EchosounderController.ECHOSOUNDER_URL)) {
             if (obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.POST.name())) {
                 if (auth.isAuthenticated() && auth.getAuthorities().contains(new SimpleGrantedAuthority(configuration.getString("default.writerole")))) {
-                    LOGGER.info("Granted.");
+                    LOGGER.info(GRANTED);
                     return ACCESS_GRANTED;
                 } else {
-                    LOGGER.info("Denied.");
+                    LOGGER.info(DENIED);
                     return ACCESS_DENIED;
                 }
             } else if (obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.PUT.name()) || obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.DELETE.name())) {
                 Collection<String> auths = getAuths(auth.getAuthorities());
                 String[] args = obj.getRequestUrl().split("/");
                 if (auth.isAuthenticated() && datasetDao.hasWriteAccess(auths, "echosounder", "data", args[MISSIONTYPE_PATH], args[YEAR_PATH], args[PLATFORM_PATH], args[DELIVERY_PATH])) {
-                    LOGGER.info("Granted.");
+                    LOGGER.info(GRANTED);
                     return ACCESS_GRANTED;
                 } else {
-                    LOGGER.info("Denied.");
+                    LOGGER.info(DENIED);
                     return ACCESS_DENIED;
                 }
             } else if (obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.GET.name())) {
                 Collection<String> auths = getAuths(auth.getAuthorities());
                 String[] args = obj.getRequestUrl().split("/");
                 if (args.length != FULL_PATH_ARG_LENGTH) {
-                    LOGGER.info("Granted.");
+                    LOGGER.info(GRANTED);
                     return ACCESS_GRANTED;
                 } else if (datasetDao.hasReadAccess(auths, "echosounder", "data", args[MISSIONTYPE_PATH], args[YEAR_PATH], args[PLATFORM_PATH], args[DELIVERY_PATH])) {
-                    LOGGER.info("Granted.");
+                    LOGGER.info(GRANTED);
                     return ACCESS_GRANTED;
                 } else {
-                    LOGGER.info("Denied.");
+                    LOGGER.info(DENIED);
                     return ACCESS_DENIED;
                 }
             } else {
-                LOGGER.info("Granted.");
+                LOGGER.info(GRANTED);
                 return ACCESS_GRANTED;
             }
         } else {
             // Not biotic data
-            LOGGER.info("Abstained.");
+            LOGGER.info(ABSTAINED);
             return ACCESS_ABSTAIN;
         }
     }
