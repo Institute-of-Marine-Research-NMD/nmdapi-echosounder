@@ -23,8 +23,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 @EnableWebMvcSecurity
@@ -63,20 +61,31 @@ public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
     }
 
     @Bean
-    public TokenEnhancer tokenEnhancer() throws IOException, CertificateException, InvalidKeyException {
-        TokenEnhancer enhancer = new JwtAccessTokenConverter("keys/fs.cer");
+    public TokenEnhancer tokenEnhancer() {
+        TokenEnhancer enhancer = null;
+        try {
+            enhancer = new JwtAccessTokenConverter("keys/fs.cer");
+        } catch (IOException | CertificateException | InvalidKeyException ex) {
+            LOGGER.error("Could not create Access token converter", ex);
+        }
         return enhancer;
     }
 
     @Bean(name = "tokenStore")
-    public TokenStore tokenStore() throws IOException, CertificateException, InvalidKeyException {
+    public TokenStore tokenStore() {
         TokenStore store = new JwtTokenStore(accessTokenConverter());
         return store;
     }
 
     @Bean
-    public JwtAccessTokenConverter accessTokenConverter() throws IOException, CertificateException, InvalidKeyException {
-        JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter("keys/fs.cer");
+    public JwtAccessTokenConverter accessTokenConverter() {
+        JwtAccessTokenConverter accessTokenConverter = null;
+        try {
+            accessTokenConverter = new JwtAccessTokenConverter("keys/fs.cer");
+            return accessTokenConverter;
+        } catch (IOException | CertificateException | InvalidKeyException ex) {
+            LOGGER.error("Could not create Access token converter", ex);
+        }
         return accessTokenConverter;
     }
 }
