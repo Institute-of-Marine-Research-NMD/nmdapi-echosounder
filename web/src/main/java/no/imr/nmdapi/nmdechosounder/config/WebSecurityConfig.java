@@ -54,7 +54,7 @@ public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
     }
 
     @Bean
-    public DefaultTokenServices tokenServices() throws IOException, CertificateException, InvalidKeyException {
+    public DefaultTokenServices tokenServices() {
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setTokenStore(tokenStore());
         return tokenServices;
@@ -73,8 +73,7 @@ public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
 
     @Bean(name = "tokenStore")
     public TokenStore tokenStore() {
-        TokenStore store = new JwtTokenStore(accessTokenConverter());
-        return store;
+        return new JwtTokenStore(accessTokenConverter());
     }
 
     @Bean
