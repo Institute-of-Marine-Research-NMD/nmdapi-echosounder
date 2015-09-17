@@ -60,6 +60,11 @@ public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
         return tokenServices;
     }
 
+    /**
+     * Added token enhancer for converting the jwt token elements.
+     *
+     * @return
+     */
     @Bean
     public TokenEnhancer tokenEnhancer() {
         TokenEnhancer enhancer = null;
@@ -71,11 +76,20 @@ public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
         return enhancer;
     }
 
+    /**
+     * Tokenstore which does not store the token, but just handles them.
+     *
+     * @return
+     */
     @Bean(name = "tokenStore")
     public TokenStore tokenStore() {
         return new JwtTokenStore(accessTokenConverter());
     }
 
+    /**
+     * For converting jwt access tokens to spring objects.
+     * @return
+     */
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter accessTokenConverter = null;
