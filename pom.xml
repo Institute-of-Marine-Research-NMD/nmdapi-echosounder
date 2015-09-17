@@ -19,7 +19,7 @@
         <repository>
             <id>nexus-release</id>
             <name>Nexus release repository for IMR</name>
-            <url>http://build.imr.no:8081/nexus/content/repositories/releases/</url>
+            <url>http://build.imr.no/nexus/content/repositories/releases/</url>
         </repository>
         <repository>
             <id>repository.springsource.milestone</id>
