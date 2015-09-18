@@ -85,7 +85,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public HttpMessageConverter getEchoMappingJaxBHttpMessageConverter() {
         JAXBHttpMessageConverter converter = null;
         try {
-            converter = new JAXBHttpMessageConverter(new EchoNamespacePrefixMapper(),
+            converter = new JAXBHttpMessageConverter(new EchoNamespacePrefixMapper(),false,
                     "no.imr.nmdapi.generic.nmdechosounder.domain.luf20");
         } catch (JAXBException ex) {
             LOGGER.error("Error creating message converter.", ex);
@@ -96,7 +96,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     private HttpMessageConverter<?> getResponseMappingJaxBHttpMessageConverter() {
         JAXBHttpMessageConverter converter = null;
         try {
-            converter = new JAXBHttpMessageConverter(new ResponseNamespacePrefixMapper(),
+            converter = new JAXBHttpMessageConverter(new ResponseNamespacePrefixMapper(),false,
                     "no.imr.nmdapi.generic.response.v1");
         } catch (JAXBException ex) {
             LOGGER.error("Error creating message converter.", ex);
