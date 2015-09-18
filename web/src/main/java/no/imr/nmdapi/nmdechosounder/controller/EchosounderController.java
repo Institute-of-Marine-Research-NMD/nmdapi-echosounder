@@ -169,7 +169,7 @@ public class EchosounderController {
      * @return
      */
     @PerformanceLogging
-    @RequestMapping(value = "/{missiontype}/{year}/{platform}/{delivery}/info", method = RequestMethod.GET)
+    @RequestMapping(value = "/{missiontype}/{year}/{platform}/{delivery}", method = RequestMethod.GET, params = {"type=info"})
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Object getInfo(@PathVariable(value = "missiontype") String missiontype, @PathVariable(value = "year") String year, @PathVariable(value = "platform") String platform, @PathVariable(value = "delivery") String delivery) {

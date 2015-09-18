@@ -125,7 +125,7 @@ public class EchosounderAccessDecisionVoter implements AccessDecisionVoter<Filte
                 return ACCESS_GRANTED;
             }
         } else {
-            // Not biotic data
+            // Not echosounder data
             LOGGER.info(ABSTAINED);
             return ACCESS_ABSTAIN;
         }
