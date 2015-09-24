@@ -1,6 +1,7 @@
 package no.imr.nmdapi.nmdechosounder.config;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
+import java.net.URL;
 import java.util.List;
 import javax.xml.bind.JAXBException;
 import no.imr.nmdapi.common.jaxb.converters.JAXBHttpMessageConverter;
@@ -85,7 +86,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public HttpMessageConverter getEchoMappingJaxBHttpMessageConverter() {
         JAXBHttpMessageConverter converter = null;
         try {
-            converter = new JAXBHttpMessageConverter(new EchoNamespacePrefixMapper(),false,
+            URL schemaFile = Thread.currentThread().getContextClassLoader().getResource("echo.xsd");
+            converter = new JAXBHttpMessageConverter(new EchoNamespacePrefixMapper(),false, schemaFile,
                     "no.imr.nmdapi.generic.nmdechosounder.domain.luf20");
         } catch (JAXBException ex) {
             LOGGER.error("Error creating message converter.", ex);
