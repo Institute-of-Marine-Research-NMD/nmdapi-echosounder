@@ -33,36 +33,23 @@ import org.springframework.web.context.WebApplicationContext;
  * @author kjetilf
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext-test.xml"})
 @WebAppConfiguration
 public class TestFull {
 
     private MockMvc mockMvc;
 
     @Autowired
-    private EchosounderController controller;
-
-    @Mock
-    private Configuration configuration;
-
-    @Autowired
     private WebApplicationContext webApplicationContext;
 
     @Before
     public void setUp() throws Exception {
-        FileUtils.deleteDirectory(new File(System.getProperty("java.io.tmpdir") + File.separator + "Forskningsfartøy"));
+        FileUtils.deleteDirectory(new File(System.getProperty("java.io.tmpdir") + File.separator + "test" + File.separator));
 
         MockitoAnnotations.initMocks(this);
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreAttributeOrder(true);
         XMLUnit.setIgnoreComments(true);
-        doReturn(System.getProperty("java.io.tmpdir") + File.separator).when(configuration).getString("pre.data.dir");
-        doReturn("biotic").when(configuration).getString("post.data.dir");
-        doReturn("unrestricted").when(configuration).getString("default.readrole");
-        doReturn("SG-FAG-CRUISE-WRITE").when(configuration).getString("default.writerole");
-        doReturn("imr").when(configuration).getString("default.owner");
-        doReturn("no.imr.nmd.commons.dataset.jaxb:no.imr.nmd.commons.cruise.jaxb").when(configuration).getString("app.packages");
-        doReturn("SG-FAG-430-NMD").when(configuration).getString("admin.role");
         mockMvc = webAppContextSetup(webApplicationContext).build();
     }
 
