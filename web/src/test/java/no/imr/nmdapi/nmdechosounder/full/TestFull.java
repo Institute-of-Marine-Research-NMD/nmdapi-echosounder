@@ -1,15 +1,11 @@
 package no.imr.nmdapi.nmdechosounder.full;
 
 import java.io.File;
-import no.imr.nmdapi.nmdechosounder.controller.EchosounderController;
-import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.FileUtils;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import static org.mockito.Mockito.doReturn;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

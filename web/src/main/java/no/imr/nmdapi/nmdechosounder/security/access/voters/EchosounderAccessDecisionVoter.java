@@ -2,6 +2,7 @@ package no.imr.nmdapi.nmdechosounder.security.access.voters;
 
 import java.util.Collection;
 import java.util.HashSet;
+import no.imr.nmd.commons.dataset.jaxb.DataTypeEnum;
 import no.imr.nmdapi.dao.file.NMDDatasetDao;
 import no.imr.nmdapi.nmdechosounder.controller.EchosounderController;
 import org.apache.commons.configuration.Configuration;
@@ -100,7 +101,7 @@ public class EchosounderAccessDecisionVoter implements AccessDecisionVoter<Filte
             } else if (obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.PUT.name()) || obj.getHttpRequest().getMethod().equalsIgnoreCase(HttpMethod.DELETE.name())) {
                 Collection<String> auths = getAuths(auth.getAuthorities());
                 String[] args = obj.getRequestUrl().split("/");
-                if (auth.isAuthenticated() && datasetDao.hasWriteAccess(auths, "echosounder", "data", args[MISSIONTYPE_PATH], args[YEAR_PATH], args[PLATFORM_PATH], args[DELIVERY_PATH])) {
+                if (auth.isAuthenticated() && datasetDao.hasWriteAccess(auths, DataTypeEnum.ECHOSOUNDER, "data", args[MISSIONTYPE_PATH], args[YEAR_PATH], args[PLATFORM_PATH], args[DELIVERY_PATH])) {
                     LOGGER.info(GRANTED);
                     return ACCESS_GRANTED;
                 } else {
@@ -113,7 +114,7 @@ public class EchosounderAccessDecisionVoter implements AccessDecisionVoter<Filte
                 if (args.length != FULL_PATH_ARG_LENGTH) {
                     LOGGER.info(GRANTED);
                     return ACCESS_GRANTED;
-                } else if (datasetDao.hasReadAccess(auths, "echosounder", "data", args[MISSIONTYPE_PATH], args[YEAR_PATH], args[PLATFORM_PATH], args[DELIVERY_PATH])) {
+                } else if (datasetDao.hasReadAccess(auths, DataTypeEnum.ECHOSOUNDER, "data", args[MISSIONTYPE_PATH], args[YEAR_PATH], args[PLATFORM_PATH], args[DELIVERY_PATH])) {
                     LOGGER.info(GRANTED);
                     return ACCESS_GRANTED;
                 } else {
