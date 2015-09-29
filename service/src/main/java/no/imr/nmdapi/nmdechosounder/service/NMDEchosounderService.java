@@ -64,19 +64,23 @@ public interface NMDEchosounderService {
      */
     boolean hasData(String missiontype, String year, String platform, String delivery);
 
-    /**
-     *
-     * @param cruisenr
-     * @return
-     */
-    boolean hasDataByCruiseNr(String cruisenr);
 
     /**
      *
      * @param cruisenr
+     * @param shipname
+     * @param contextpath
      * @return
      */
-    Object getDataByCruiseNr(String cruisenr);
+    Object getDataByCruiseNr(String cruisenr, String shipname, String contextpath);
+
+    /**
+     *
+     * @param cruisenr
+     * @param shipname
+     * @return
+     */
+    boolean hasDataByCruiseNr(String cruisenr, String shipname);
 
     /**
      *
@@ -87,6 +91,5 @@ public interface NMDEchosounderService {
      * @return
      */
     Object getInfo(String missiontype, String year, String platform, String delivery);
-
 
 }

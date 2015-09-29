@@ -1,8 +1,11 @@
 package no.imr.nmdapi.nmdechosounder.controller;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import no.imr.framework.logging.slf4j.aspects.stereotype.PerformanceLogging;
-import no.imr.nmd.commons.dataset.jaxb.DatasetType;
 import no.imr.nmdapi.exceptions.BadRequestException;
 import no.imr.nmdapi.generic.nmdechosounder.domain.luf20.EchosounderDatasetType;
 import no.imr.nmdapi.nmdechosounder.service.NMDEchosounderService;
@@ -124,19 +127,21 @@ public class EchosounderController {
         }
     }
 
-    /**
+        /**
      * Get data by id or cruise number.
      *
+     * @param cruisenr
      * @return Response object.
      */
     @PerformanceLogging
     @RequestMapping(value = "/find", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Object find(@RequestParam(value = "cruisenr", required = false) String cruisenr) {
-        LOGGER.info("Start EchosounderController.find");
+    public Object find(@RequestParam(value = "cruisenr", required = true) String cruisenr, @RequestParam(value = "shipname", required = true) String shipname, HttpServletRequest request) throws MalformedURLException, URISyntaxException {
+        LOGGER.info("Start BioticController.find");
         if (cruisenr != null) {
-            return nmdEchosounderService.getDataByCruiseNr(cruisenr);
+            URI uri = (new URI(request.getRequestURL().toString())).resolve(".");
+            return nmdEchosounderService.getDataByCruiseNr(cruisenr, shipname, uri.toString());
         } else {
             throw new BadRequestException("Cruisenr parameters must be set.");
         }
@@ -145,14 +150,15 @@ public class EchosounderController {
     /**
      * Get data by id or cruise number.
      *
-     * @return Response object.
+     * @param httpServletResponse
+     * @param cruisenr
      */
     @PerformanceLogging
     @RequestMapping(value = "/find", method = RequestMethod.HEAD)
     @ResponseBody
-    public void find(HttpServletResponse httpServletResponse, @RequestParam(value = "cruisenr", required = false) String cruisenr) {
-        LOGGER.info("Start EchosounderController.find");
-        if (nmdEchosounderService.hasDataByCruiseNr(cruisenr)) {
+    public void find(HttpServletResponse httpServletResponse, @RequestParam(value = "cruisenr", required = false) String cruisenr, @RequestParam(value = "shipname", required = true) String shipname) {
+        LOGGER.info("Start BioticController.find");
+        if (nmdEchosounderService.hasDataByCruiseNr(cruisenr, shipname)) {
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
         } else {
             httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);

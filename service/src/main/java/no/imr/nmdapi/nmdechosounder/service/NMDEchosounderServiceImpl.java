@@ -1,5 +1,6 @@
 package no.imr.nmdapi.nmdechosounder.service;
 
+import java.nio.file.Path;
 import no.imr.nmd.commons.dataset.jaxb.DataTypeEnum;
 import no.imr.nmdapi.dao.file.NMDDatasetDao;
 import no.imr.nmdapi.generic.nmdechosounder.domain.luf20.EchosounderDatasetType;
@@ -56,13 +57,16 @@ public class NMDEchosounderServiceImpl implements NMDEchosounderService {
     }
 
     @Override
-    public Object getDataByCruiseNr(final String cruisenr) {
-        return nmdDatasetDao.getByCruisenr(DataTypeEnum.ECHOSOUNDER, DATASET_NAME, cruisenr);
+    public Object getDataByCruiseNr(final String cruisenr, final String shipname, String contextpath) {
+        Path path = nmdDatasetDao.getByCruisenr(DataTypeEnum.BIOTIC, DATASET_NAME, cruisenr, shipname);
+        OptionKeyValueListType keyValueListType = new OptionKeyValueListType();
+        keyValueListType.getElement().add(getOptionKeyValueType("url", getUrl(contextpath, path)));
+        return keyValueListType;
     }
 
     @Override
-    public boolean hasDataByCruiseNr(final String cruisenr) {
-        return nmdDatasetDao.hasDataByCruisenr(DataTypeEnum.ECHOSOUNDER, DATASET_NAME, cruisenr);
+    public boolean hasDataByCruiseNr(final String cruisenr, final String shipname) {
+        return nmdDatasetDao.hasDataByCruisenr(DataTypeEnum.BIOTIC, DATASET_NAME, cruisenr, shipname);
     }
 
     @Override
@@ -82,5 +86,19 @@ public class NMDEchosounderServiceImpl implements NMDEchosounderService {
         formatType.setKey(key);
         formatType.setValue(value);
         return formatType;
+    }
+
+    private String getUrl(String contextpath, Path path) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(contextpath);
+        builder.append("/");
+        builder.append(path.getName(path.getNameCount() - 5));
+        builder.append("/");
+        builder.append(path.getName(path.getNameCount() - 4));
+        builder.append("/");
+        builder.append(path.getName(path.getNameCount() - 3));
+        builder.append("/");
+        builder.append(path.getName(path.getNameCount() - 2));
+        return builder.toString();
     }
 }
