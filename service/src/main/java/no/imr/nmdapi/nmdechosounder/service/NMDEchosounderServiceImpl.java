@@ -1,12 +1,19 @@
 package no.imr.nmdapi.nmdechosounder.service;
 
 import java.nio.file.Path;
+import java.util.GregorianCalendar;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import no.imr.nmd.commons.dataset.jaxb.DataTypeEnum;
+import no.imr.nmd.commons.dataset.jaxb.QualityEnum;
 import no.imr.nmdapi.dao.file.NMDDatasetDao;
+import no.imr.nmdapi.exceptions.S2DException;
 import no.imr.nmdapi.generic.nmdechosounder.domain.luf20.EchosounderDatasetType;
 import no.imr.nmdapi.generic.response.v1.OptionKeyValueListType;
 import no.imr.nmdapi.generic.response.v1.OptionKeyValueType;
 import org.apache.commons.configuration.Configuration;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -15,6 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author kjetilf
  */
 public class NMDEchosounderServiceImpl implements NMDEchosounderService {
+
+    /**
+     * Class logger.
+     */
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(NMDEchosounderServiceImpl.class);
 
     /**
      * Dataset name.
@@ -35,20 +47,41 @@ public class NMDEchosounderServiceImpl implements NMDEchosounderService {
     @Override
     public void deleteData(final String missiontype, final String year, final String platform, final String delivery) {
         nmdDatasetDao.delete(DataTypeEnum.ECHOSOUNDER, DATASET_NAME, true, missiontype, year, platform, delivery);
+        nmdDatasetDao.removeDataset(DataTypeEnum.ECHOSOUNDER, DATASET_NAME, missiontype, year, platform, delivery);
     }
 
    @Override
     public void insertData(final String missiontype, final String year, final String platform, final String delivery, final EchosounderDatasetType dataset) {
-        String readRole = configuration.getString("default.readrole");
-        String writeRole = configuration.getString("default.writerole");
-        String owner = configuration.getString("default.owner");
-        nmdDatasetDao.insert(writeRole, readRole, owner, DataTypeEnum.ECHOSOUNDER, DATASET_NAME, dataset, true, missiontype, year, platform, delivery);
+                try {
+            String readRole = configuration.getString("default.readrole");
+            String writeRole = configuration.getString("default.writerole");
+            String owner = configuration.getString("default.owner");
+
+            GregorianCalendar gregorianCalendar = new GregorianCalendar();
+            DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
+            XMLGregorianCalendar now = datatypeFactory.newXMLGregorianCalendar(gregorianCalendar);
+
+            nmdDatasetDao.insert(DataTypeEnum.ECHOSOUNDER, DATASET_NAME, dataset, missiontype, year, platform, delivery);
+            nmdDatasetDao.createDataset(writeRole, readRole, "", owner, QualityEnum.NONE, DataTypeEnum.ECHOSOUNDER, DATASET_NAME, now, missiontype, year, platform, delivery);
+        } catch (DatatypeConfigurationException ex) {
+            LOGGER.error("Error creating xml calendar", ex);
+            throw new S2DException("Error creating xml calendar", ex);
+        }
     }
 
 
     @Override
     public void updateData(final String missiontype, final String year, final String platform, final String delivery, final EchosounderDatasetType dataset) {
-        nmdDatasetDao.update(DataTypeEnum.ECHOSOUNDER, DATASET_NAME, dataset, missiontype, year, platform, delivery);
+        try {
+            nmdDatasetDao.update(DataTypeEnum.ECHOSOUNDER, DATASET_NAME, dataset, missiontype, year, platform, delivery);
+            GregorianCalendar gregorianCalendar = new GregorianCalendar();
+            DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
+            XMLGregorianCalendar now = datatypeFactory.newXMLGregorianCalendar(gregorianCalendar);
+            nmdDatasetDao.updateDataset(DataTypeEnum.ECHOSOUNDER, DATASET_NAME, now, missiontype, year, platform, delivery);
+        } catch (DatatypeConfigurationException ex) {
+            LOGGER.error("Error creating xml calendar", ex);
+            throw new S2DException("Error creating xml calendar", ex);
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package no.imr.nmdapi.nmdechosounder.security.access.voters;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import no.imr.nmd.commons.dataset.jaxb.DataTypeEnum;
+import no.imr.nmd.commons.dataset.jaxb.QualityEnum;
 import no.imr.nmdapi.dao.file.NMDDatasetDao;
 import no.imr.nmdapi.dao.file.config.CommonDaoConfig;
 import no.imr.nmdapi.generic.nmdechosounder.domain.luf20.EchosounderDatasetType;
@@ -162,7 +163,12 @@ public class TestEchoAccessDecisionVoterNoAuth {
         if (datasetDao.hasData(DataTypeEnum.ECHOSOUNDER, "data", "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101")) {
             datasetDao.delete(DataTypeEnum.ECHOSOUNDER, "data", true, "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101");
         }
-        datasetDao.insert("SG-WRITE", "unrestricted", "imr", DataTypeEnum.ECHOSOUNDER, "data", mission, true, "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101");
+        if (datasetDao.hasDataset(DataTypeEnum.ECHOSOUNDER, "data", "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101")) {
+            datasetDao.removeDataset(DataTypeEnum.ECHOSOUNDER, "data", "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101");
+        }
+        datasetDao.insert(DataTypeEnum.ECHOSOUNDER, "data", mission, "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101");
+        datasetDao.createDataset("SG-WRITE", "unrestricted", "" ,"imr", QualityEnum.NONE, DataTypeEnum.ECHOSOUNDER, "data", null, "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101");
+
         Authentication auth = mock(Authentication.class);
         doReturn(Boolean.FALSE).when(auth).isAuthenticated();
         FilterInvocation filter = mock(FilterInvocation.class);
@@ -184,7 +190,12 @@ public class TestEchoAccessDecisionVoterNoAuth {
         if (datasetDao.hasData(DataTypeEnum.ECHOSOUNDER, "data", "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101")) {
             datasetDao.delete(DataTypeEnum.ECHOSOUNDER, "data", true, "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101");
         }
-        datasetDao.insert("SG-WRITE", "SG-READ", "imr", DataTypeEnum.ECHOSOUNDER, "data", mission, true, "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101");
+        if (datasetDao.hasDataset(DataTypeEnum.ECHOSOUNDER, "data", "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101")) {
+            datasetDao.removeDataset(DataTypeEnum.ECHOSOUNDER, "data", "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101");
+        }
+        datasetDao.insert(DataTypeEnum.ECHOSOUNDER, "data", mission, "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101");
+        datasetDao.createDataset("SG-WRITE", "SG-READ", "" ,"imr", QualityEnum.NONE, DataTypeEnum.ECHOSOUNDER, "data", null, "Forskningsfartøy", "2015", "G O Sars_LMEL", "2015101");
+
         Authentication auth = mock(Authentication.class);
         doReturn(Boolean.FALSE).when(auth).isAuthenticated();
         FilterInvocation filter = mock(FilterInvocation.class);
