@@ -40,7 +40,7 @@ public class ExceptionHandlerAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorElementType handleException(final NotFoundException ex) {
-        LOGGER.info("Advice logging(Not found): ", ex);
+        LOGGER.info("Advice logging(Not found): " + ex.getMessage());
         ErrorElementType element = new ErrorElementType();
         element.setErrorcode(BigInteger.valueOf(HttpStatus.NOT_FOUND.value()));
         element.setMessage("No data was found.");
@@ -56,7 +56,7 @@ public class ExceptionHandlerAdvice {
     @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
     @ResponseBody
     public ErrorElementType handleException(final MissingDataException ex) {
-        LOGGER.info("Advice logging(Precondition failed): ", ex);
+        LOGGER.info("Advice logging(Precondition failed): " + ex.getMessage());
         ErrorElementType element = new ErrorElementType();
         element.setErrorcode(BigInteger.valueOf(HttpStatus.CONFLICT.value()));
         element.setMessage("Precondition failed");
@@ -72,7 +72,7 @@ public class ExceptionHandlerAdvice {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
     public ErrorElementType handleException(final AlreadyExistsException ex) {
-        LOGGER.info("Advice logging(AlreadyExists): ", ex);
+        LOGGER.info("Advice logging(AlreadyExists): " + ex.getMessage());
         ErrorElementType element = new ErrorElementType();
         element.setErrorcode(BigInteger.valueOf(HttpStatus.CONFLICT.value()));
         element.setMessage("Data already exists.");
@@ -108,7 +108,7 @@ public class ExceptionHandlerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ErrorElementType handleException(final ConversionException ex) {
-        LOGGER.info("Bad request.", ex);
+        LOGGER.info("Bad request. " + ex.getMessage());
         ErrorElementType element = new ErrorElementType();
         element.setErrorcode(BigInteger.valueOf(HttpStatus.BAD_REQUEST.value()));
         element.setMessage("Bad request: " + ex.getMessage());
@@ -125,7 +125,7 @@ public class ExceptionHandlerAdvice {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
     public ErrorElementType handleException(final InvalidTokenException ex) {
-        LOGGER.info("Invalid bearer token.", ex);
+        LOGGER.info("Invalid bearer token. " + ex.getMessage());
         ErrorElementType element = new ErrorElementType();
         element.setErrorcode(BigInteger.valueOf(HttpStatus.UNAUTHORIZED.value()));
         element.setMessage("User token is either missing or wrong. " + ex.getOAuth2ErrorCode());
@@ -142,7 +142,7 @@ public class ExceptionHandlerAdvice {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ResponseBody
     public ErrorElementType handleException(final AccessDeniedException ex) {
-        LOGGER.info("Access denied.", ex);
+        LOGGER.info("Access denied. " + ex.getMessage());
         ErrorElementType element = new ErrorElementType();
         element.setErrorcode(BigInteger.valueOf(HttpStatus.FORBIDDEN.value()));
         element.setMessage("User does not have access to the resource. Contact datahjelp@imr.no for more information.");
