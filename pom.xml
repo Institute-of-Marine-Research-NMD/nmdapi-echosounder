@@ -8,7 +8,7 @@
     </parent>
     <groupId>no.imr.nmdapi.echosounder</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>NMDAPI parent - NMDEchosounder</name>
     <modules>
@@ -102,7 +102,7 @@
         <connection>scm:git:https://github.com/Institute-of-Marine-Research-NMD/nmdapi-echosounder.git</connection>
         <url>scm:git:https://github.com/Institute-of-Marine-Research-NMD/nmdapi-echosounder.git</url>
         <developerConnection>scm:git:https://github.com/Institute-of-Marine-Research-NMD/nmdapi-echosounder.git</developerConnection>
-        <tag>parent-1.0.2</tag>
+        <tag>HEAD</tag>
     </scm>
     <distributionManagement>
         <repository>
