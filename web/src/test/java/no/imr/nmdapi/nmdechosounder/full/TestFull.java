@@ -52,40 +52,40 @@ public class TestFull {
     @Test
     public void testFull() throws Exception {
         //Get data and verify that nothing is there.
-        mockMvc.perform(get("/Forskningsfartøy/2014/Johan Hjort-LDGJ/2014201").characterEncoding("UTF-8")).andExpect(status().isNotFound());
+        mockMvc.perform(get("/Forskningsfartøy/2011/G O Sars-LMEL/2011102").characterEncoding("UTF-8")).andExpect(status().isNotFound());
         //Insert data.
         mockMvc.perform(
-                post("/Forskningsfartøy/2014/Johan Hjort-LDGJ/2014201")
+                post("/Forskningsfartøy/2011/G O Sars-LMEL/2011102")
                 .contentType(MediaType.APPLICATION_XML)
                 .characterEncoding("UTF-8")
-                .content(FileUtils.readFileToString(new File(this.getClass().getClassLoader().getResource("luf20_1.xml").getFile()), "UTF-8"))
+                .content(FileUtils.readFileToString(new File(this.getClass().getClassLoader().getResource("2011102.xml").getFile()), "UTF-8"))
                 )
                 .andDo(print())
                 .andExpect(status().isOk());
         // Verify that data is there.
-        final String insertedFile = FileUtils.readFileToString(new File(this.getClass().getClassLoader().getResource("luf20_1.xml").getFile()), "UTF-8");
-        mockMvc.perform(get("/Forskningsfartøy/2014/Johan Hjort-LDGJ/2014201").characterEncoding("UTF-8")).andExpect(status().isOk()).andExpect(content().xml(insertedFile));
+        final String insertedFile = FileUtils.readFileToString(new File(this.getClass().getClassLoader().getResource("2011102.xml").getFile()), "UTF-8");
+        mockMvc.perform(get("/Forskningsfartøy/2011/G O Sars-LMEL/2011102").characterEncoding("UTF-8")).andExpect(status().isOk()).andExpect(content().xml(insertedFile));
 
         // Update data.
         mockMvc.perform(
-                put("/Forskningsfartøy/2014/Johan Hjort-LDGJ/2014201")
+                put("/Forskningsfartøy/2011/G O Sars-LMEL/2011102")
                 .contentType(MediaType.APPLICATION_XML)
                 .characterEncoding("UTF-8")
-                .content(FileUtils.readFileToString(new File(this.getClass().getClassLoader().getResource("luf20_2.xml").getFile()), "UTF-8"))
+                .content(FileUtils.readFileToString(new File(this.getClass().getClassLoader().getResource("2011102_2.xml").getFile()), "UTF-8"))
                 )
                 .andExpect(status().isOk());
 
         // Verify that data is there.
-        String updatedFile = FileUtils.readFileToString(new File(this.getClass().getClassLoader().getResource("luf20_2.xml").getFile()), "UTF-8");
-        mockMvc.perform(get("/Forskningsfartøy/2014/Johan Hjort-LDGJ/2014201").characterEncoding("UTF-8")).andExpect(status().isOk()).andExpect(content().xml(updatedFile));
+        String updatedFile = FileUtils.readFileToString(new File(this.getClass().getClassLoader().getResource("2011102_2.xml").getFile()), "UTF-8");
+        mockMvc.perform(get("/Forskningsfartøy/2011/G O Sars-LMEL/2011102").characterEncoding("UTF-8")).andExpect(status().isOk()).andExpect(content().xml(updatedFile));
 
         //Test get information
-        mockMvc.perform(get("/Forskningsfartøy/2014/Johan Hjort-LDGJ/2014201?type=info").characterEncoding("UTF-8")).andExpect(status().isOk()).andDo(print());
+        mockMvc.perform(get("/Forskningsfartøy/2011/G O Sars-LMEL/2011102?type=info").characterEncoding("UTF-8")).andExpect(status().isOk()).andDo(print());
 
         //Delete data.
-        mockMvc.perform(delete("/Forskningsfartøy/2014/Johan Hjort-LDGJ/2014201").characterEncoding("UTF-8")).andExpect(status().isOk());
+        mockMvc.perform(delete("/Forskningsfartøy/2011/G O Sars-LMEL/2011102").characterEncoding("UTF-8")).andExpect(status().isOk());
         //Get data and verify that nothing is there.
-        mockMvc.perform(get("/Forskningsfartøy/2014/Johan Hjort-LDGJ/2014201").characterEncoding("UTF-8")).andExpect(status().isNotFound());
+        mockMvc.perform(get("/Forskningsfartøy/2011/G O Sars-LMEL/2011102").characterEncoding("UTF-8")).andExpect(status().isNotFound());
     }
 
     @Test

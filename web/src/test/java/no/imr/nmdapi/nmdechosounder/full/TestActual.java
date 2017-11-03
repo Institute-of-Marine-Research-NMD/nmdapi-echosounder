@@ -58,13 +58,13 @@ public class TestActual {
                 post("/Forskningsfartøy/2012/G O Sars-LMEL/2012111")
                 .contentType(MediaType.APPLICATION_XML)
                 .characterEncoding("UTF-8")
-                .content(FileUtils.readFileToString(new File(this.getClass().getClassLoader().getResource("2012111.xml").getFile()), "UTF-8"))
+                .content(FileUtils.readFileToString(new File(this.getClass().getClassLoader().getResource("2011102.xml").getFile()), "UTF-8"))
                 )
                 .andDo(print())
                 .andExpect(status().isOk());
 
         // Verify that data is there.
-        final String insertedFile = FileUtils.readFileToString(new File(this.getClass().getClassLoader().getResource("2012111.xml").getFile()), "UTF-8");
+        final String insertedFile = FileUtils.readFileToString(new File(this.getClass().getClassLoader().getResource("2011102.xml").getFile()), "UTF-8");
         mockMvc.perform(get("/Forskningsfartøy/2012/G O Sars-LMEL/2012111").characterEncoding("UTF-8")).andExpect(status().isOk()).andExpect(content().xml(insertedFile));
 
         //Delete data.
