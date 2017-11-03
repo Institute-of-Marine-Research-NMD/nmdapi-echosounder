@@ -36,7 +36,7 @@
         <dependency>
             <groupId>no.imr.nmd.commons.echosounder.jaxb</groupId>
             <artifactId>commons-echosounder-jaxb</artifactId>
-            <version>1.0.7-SNAPSHOT</version>
+            <version>1.0.8</version>
         </dependency>
         <dependency>
             <groupId>no.imr.nmdapi.common</groupId>
@@ -60,6 +60,10 @@
                     <connectionType>connection</connectionType>
                     <tag>${project.version}</tag>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
             </plugin>
         </plugins>
     </build>
